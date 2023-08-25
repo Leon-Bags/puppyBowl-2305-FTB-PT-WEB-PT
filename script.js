@@ -86,7 +86,7 @@ const removePlayer = async (playerId) => {
  * @returns the playerContainerHTML variable.
  */
 
-//Render the Add new player form
+//Render the All players form
 const renderAllPlayers = (players) => {
     try {
         playerContainer.innerHTML = "";
@@ -119,7 +119,7 @@ const renderAllPlayers = (players) => {
                 event.preventDefault();
                 removePlayer(player.id)
             });
-        })      
+        })
     } catch (error) {
         console.error('Uh oh, trouble rendering players!', error);
     }
@@ -152,7 +152,7 @@ const renderNewPlayerForm = () => {
 
         <p class="required">"*" = Required Input</p>
         
-        <button class="sub-button">SEND IT!</button>
+        <button class="sub-button">Submit!</button>
         </form>
         `;
 
@@ -164,7 +164,7 @@ const renderNewPlayerForm = () => {
             const breed = document.getElementById('player-breed').value;
             const status = document.getElementById('player-status').value.toLowerCase();
             const imageUrl = document.getElementById('player-image').value;
-            
+
             let playerObj = {
                 name: name,
                 breed: breed,
@@ -177,7 +177,7 @@ const renderNewPlayerForm = () => {
                 await addNewPlayer(playerObj);
 
                 // Clear the form after successful submission
-                document.getElementById("user-form").reset();
+                document.getElementById("userForm").reset();
 
                 // Fetch and render all parties again to include the newly created party
                 const data = await fetchAllPlayers();
@@ -192,12 +192,10 @@ const renderNewPlayerForm = () => {
     }
 };
 
+// Initialise the page
 const init = async () => {
-    const players = await fetchAllPlayers();
-    renderAllPlayers(players);
     renderNewPlayerForm();
-
-    //removePlayer(players[0].id); 
-}
-
-//init();
+    const data = await fetchAllPlayers();
+    renderAllPlayers(data);
+};
+init();
